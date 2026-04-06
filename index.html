@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Dashboard Pro - Real-time Analysis</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@3/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Menu Toggle -->
+        <div class="mobile-menu-toggle" id="mobileMenuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar-nav" id="sidebarNav">
+            <div class="nav-header">
+                <h2>📊 Trading Pro</h2>
+                <button class="close-nav" id="closeNav">✕</button>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="#page1" class="nav-link active" data-page="1">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Real-time Charts</span>
+                </a></li>
+                <li><a href="#page2" class="nav-link" data-page="2">
+                    <span class="nav-icon">🏆</span>
+                    <span class="nav-text">Entry Ranking</span>
+                </a></li>
+                <li><a href="#page3" class="nav-link" data-page="3">
+                    <span class="nav-icon">🔍</span>
+                    <span class="nav-text">SMC/ICT Analysis</span>
+                </a></li>
+                <li><a href="#page4" class="nav-link" data-page="4">
+                    <span class="nav-icon">💰</span>
+                    <span class="nav-text">Lot Calculator</span>
+                </a></li>
+                <li><a href="#page5" class="nav-link" data-page="5">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Profile</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-footer">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <button class="settings-btn" id="settingsBtn">⚙️</button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="mainContent">
+            <!-- Page 1: Real-time Charts -->
+            <section id="page1" class="page active">
+                <div class="page-header">
+                    <h1>📈 Real-time Trading Charts</h1>
+                    <p>Live prices from TradingView API</p>
+                </div>
+                <div class="charts-container">
+                    <div class="chart-group">
+                        <div class="chart-card">
+                            <div class="chart-title">
+                                <h3>XAU/USD</h3>
+                                <span class="price-tag" id="xauPrice">$2,000.00</span>
+                                <span class="change-tag" id="xauChange">+0.00%</span>
+                            </div>
+                            <div class="chart-body" id="chartXAU"></div>
+                            <div class="chart-info">
+                                <span>High: <strong id="xauHigh">-</strong></span>
+                                <span>Low: <strong id="xauLow">-</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-title">
+                                <h3>BTC/USD</h3>
+                                <span class="price-tag" id="btcPrice">$0.00</span>
+                                <span class="change-tag" id="btcChange">+0.00%</span>
+                            </div>
+                            <div class="chart-body" id="chartBTC"></div>
+                            <div class="chart-info">
+                                <span>High: <strong id="btcHigh">-</strong></span>
+                                <span>Low: <strong id="btcLow">-</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-title">
+                                <h3>EUR/USD</h3>
+                                <span class="price-tag" id="eurPrice">$1.00</span>
+                                <span class="change-tag" id="eurChange">+0.00%</span>
+                            </div>
+                            <div class="chart-body" id="chartEUR"></div>
+                            <div class="chart-info">
+                                <span>High: <strong id="eurHigh">-</strong></span>
+                                <span>Low: <strong id="eurLow">-</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-status">
+                    <div class="status-indicator" id="apiStatus">🔴 Connecting...</div>
+                    <div class="last-update" id="lastUpdate">Last update: --:--:--</div>
+                </div>
+            </section>
+
+            <!-- Page 2: Entry Ranking -->
+            <section id="page2" class="page">
+                <div class="page-header">
+                    <h1>🏆 Entry Point Ranking</h1>
+                    <p>Best TP/SL calculations with real-time scoring</p>
+                </div>
+                
+                <div class="ranking-controls">
+                    <div class="input-group">
+                        <label>Entry Price</label>
+                        <input type="number" id="entryPrice" placeholder="Enter price" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Take Profit</label>
+                        <input type="number" id="tpPrice" placeholder="Target price" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Stop Loss</label>
+                        <input type="number" id="slPrice" placeholder="Stop price" step="0.01">
+                    </div>
+                    <button class="btn-primary" id="calcRankingBtn">Calculate Ranking</button>
+                </div>
+
+                <div class="ranking-results">
+                    <div class="ranking-card rank-1">
+                        <div class="rank-badge">🥇</div>
+                        <div class="rank-info">
+                            <h3>Best Setup</h3>
+                            <p class="score" id="score1">Score: 0/100</p>
+                            <p class="details" id="details1">Win Rate: 0% | Risk/Reward: 0</p>
+                        </div>
+                    </div>
+
+                    <div class="ranking-card rank-2">
+                        <div class="rank-badge">🥈</div>
+                        <div class="rank-info">
+                            <h3>Good Setup</h3>
+                            <p class="score" id="score2">Score: 0/100</p>
+                            <p class="details" id="details2">Win Rate: 0% | Risk/Reward: 0</p>
+                        </div>
+                    </div>
+
+                    <div class="ranking-card rank-3">
+                        <div class="rank-badge">🥉</div>
+                        <div class="rank-info">
+                            <h3>Fair Setup</h3>
+                            <p class="score" id="score3">Score: 0/100</p>
+                            <p class="details" id="details3">Win Rate: 0% | Risk/Reward: 0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ranking-table">
+                    <table id="rankingTable">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Entry</th>
+                                <th>TP</th>
+                                <th>SL</th>
+                                <th>Win %</th>
+                                <th>R:R Ratio</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Page 3: SMC/ICT Analysis -->
+            <section id="page3" class="page">
+                <div class="page-header">
+                    <h1>🔍 Market Structure Analysis</h1>
+                    <p>SMC/ICT Framework with AI Analysis (Gemini)</p>
+                </div>
+
+                <div class="analysis-controls">
+                    <div class="timeframe-selector">
+                        <button class="tf-btn active" data-tf="5m">5M</button>
+                        <button class="tf-btn" data-tf="15m">15M</button>
+                        <button class="tf-btn" data-tf="1h">1H</button>
+                    </div>
+                    <div class="pair-selector">
+                        <select id="analysisPair">
+                            <option value="XAUUSD">XAU/USD</option>
+                            <option value="BTCUSD">BTC/USD</option>
+                            <option value="EURUSD">EUR/USD</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" id="runAnalysisBtn">Run Analysis</button>
+                </div>
+
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <h3>Market Structure</h3>
+                        <div class="structure-box" id="marketStructure">
+                            <p>Trend: <span id="trendInfo">-</span></p>
+                            <p>Support: <span id="supportInfo">-</span></p>
+                            <p>Resistance: <span id="resistanceInfo">-</span></p>
+                        </div>
+                    </div>
+
+                    <div class="analysis-card">
+                        <h3>Entry Points (SMC)</h3>
+                        <div class="entry-box" id="smcEntries">
+                            <p>Entry 1: <span id="smcEntry1">-</span></p>
+                            <p>Entry 2: <span id="smcEntry2">-</span></p>
+                            <p>Entry 3: <span id="smcEntry3">-</span></p>
+                        </div>
+                    </div>
+
+                    <div class="analysis-card">
+                        <h3>ICT Confluence</h3>
+                        <div class="confluence-box" id="ictConfluence">
+                            <p>OTE Level: <span id="oteLevel">-</span></p>
+                            <p>POI Level: <span id="poiLevel">-</span></p>
+                            <p>Probability: <span id="confluenceProbability">-</span></p>
+                        </div>
+                    </div>
+
+                    <div class="analysis-card">
+                        <h3>TP/SL Levels</h3>
+                        <div class="levels-box" id="tpslLevels">
+                            <p>TP1: <span id="aiTp1">-</span></p>
+                            <p>TP2: <span id="aiTp2">-</span></p>
+                            <p>SL: <span id="aiSl">-</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-analysis">
+                    <h3>🤖 AI Analysis (Gemini)</h3>
+                    <div class="ai-content" id="aiContent">
+                        <p>Loading AI analysis...</p>
+                    </div>
+                </div>
+
+                <div class="chart-container" id="analysisChart"></div>
+            </section>
+
+            <!-- Page 4: Lot Calculator -->
+            <section id="page4" class="page">
+                <div class="page-header">
+                    <h1>💰 Lot & Risk Management Calculator</h1>
+                    <p>Smart TP/SL calculation from 5M & 15M charts</p>
+                </div>
+
+                <div class="calc-wrapper">
+                    <div class="calc-section">
+                        <h2>Input Parameters</h2>
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label>Account Balance ($)</label>
+                                <input type="number" id="accountBalance" placeholder="10000" step="100" value="10000">
+                            </div>
+                            <div class="input-group">
+                                <label>Risk per Trade (%)</label>
+                                <input type="number" id="riskPercent" placeholder="2" step="0.1" value="2" min="0.1" max="10">
+                            </div>
+                            <div class="input-group">
+                                <label>Entry Price</label>
+                                <input type="number" id="calcEntryPrice" placeholder="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>Stop Loss Price</label>
+                                <input type="number" id="calcSlPrice" placeholder="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>Take Profit Price</label>
+                                <input type="number" id="calcTpPrice" placeholder="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>Pair Pip Value (e.g., 0.01 for EURUSD)</label>
+                                <input type="number" id="pipValue" placeholder="0.01" step="0.0001" value="0.01">
+                            </div>
+                        </div>
+                        <button class="btn-primary btn-large" id="calculateLotBtn">Calculate Lot Size & Risk</button>
+                    </div>
+
+                    <div class="calc-results">
+                        <div class="result-card">
+                            <h3>Recommended Lot Size</h3>
+                            <div class="result-value" id="lotSize">0.00</div>
+                            <p>Standard Lots</p>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>Risk Amount</h3>
+                            <div class="result-value" id="riskAmount">$0.00</div>
+                            <p>Per Trade</p>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>Potential Reward</h3>
+                            <div class="result-value" id="rewardAmount">$0.00</div>
+                            <p>At TP Target</p>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>Risk/Reward Ratio</h3>
+                            <div class="result-value" id="rrRatio">0:0</div>
+                            <p>Ratio</p>
+                        </div>
+
+                        <div class="result-card full-width">
+                            <h3>Smart TP/SL Reasoning</h3>
+                            <div class="result-text" id="tpslReasoning">
+                                <p>Enter all parameters and click Calculate to see reasoning</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-timeframes">
+                    <h2>Reference Charts</h2>
+                    <div class="tf-charts">
+                        <div class="tf-card">
+                            <h3>5 Minute</h3>
+                            <div class="mini-chart" id="chart5m"></div>
+                        </div>
+                        <div class="tf-card">
+                            <h3>15 Minute</h3>
+                            <div class="mini-chart" id="chart15m"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Page 5: User Profile -->
+            <section id="page5" class="page">
+                <div class="page-header">
+                    <h1>👤 User Profile & Settings</h1>
+                    <p>Manage your trading preferences</p>
+                </div>
+
+                <div class="profile-container">
+                    <div class="profile-section">
+                        <h2>Account Information</h2>
+                        <div class="profile-form">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="username" placeholder="Enter username" value="Trader Pro">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Account Balance</label>
+                                <input type="number" id="profileBalance" placeholder="10000" step="100" value="10000">
+                            </div>
+                            <div class="form-group">
+                                <label>Trading Pairs</label>
+                                <div class="checkbox-group">
+                                    <label><input type="checkbox" name="pairs" value="XAUUSD" checked> XAU/USD</label>
+                                    <label><input type="checkbox" name="pairs" value="BTCUSD" checked> BTC/USD</label>
+                                    <label><input type="checkbox" name="pairs" value="EURUSD" checked> EUR/USD</label>
+                                </div>
+                            </div>
+                            <button class="btn-primary" id="saveProfileBtn">Save Profile</button>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>Trading Statistics</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4>Total Trades</h4>
+                                <p class="stat-value" id="totalTrades">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Win Rate</h4>
+                                <p class="stat-value" id="winRate">0%</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Profit</h4>
+                                <p class="stat-value" id="totalProfit">$0.00</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Avg Risk/Reward</h4>
+                                <p class="stat-value" id="avgRr">0:0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>API Configuration</h2>
+                        <div class="api-form">
+                            <div class="form-group">
+                                <label>TradingView API Key</label>
+                                <input type="password" id="tvApiKey" placeholder="Your TradingView API Key">
+                            </div>
+                            <div class="form-group">
+                                <label>Gemini API Key</label>
+                                <input type="password" id="geminiApiKey" placeholder="Your Gemini API Key">
+                            </div>
+                            <button class="btn-primary" id="testApiBtn">Test API Connection</button>
+                            <div class="api-status-box" id="apiStatusBox"></div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>Export & Backup</h2>
+                        <div class="export-buttons">
+                            <button class="btn-secondary" id="exportDataBtn">Export Data (JSON)</button>
+                            <button class="btn-secondary" id="importDataBtn">Import Data (JSON)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deployment-guide">
+                    <h2>🚀 Deployment Guide</h2>
+                    <div class="guide-content">
+                        <h3>Deploy to Vercel</h3>
+                        <ol>
+                            <li>Push code to GitHub: <code>git push origin main</code></li>
+                            <li>Go to <a href="https://vercel.com" target="_blank">vercel.com</a></li>
+                            <li>Import your repository</li>
+                            <li>Set Environment Variables in Vercel Dashboard</li>
+                            <li>Click Deploy</li>
+                        </ol>
+                        
+                        <h3>Environment Variables (.env)</h3>
+                        <pre>VITE_TRADINGVIEW_API=your_api_key
+VITE_GEMINI_API=your_api_key
+VITE_API_BASE_URL=https://api.example.com</pre>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/ui.js"></script>
+    <script src="js/api-handlers.js"></script>
+    <script src="js/calculations.js"></script>
+    <script src="js/tradingview.js"></script>
+    <script src="js/gemini.js"></script>
+    <script src="js/smc-ict.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

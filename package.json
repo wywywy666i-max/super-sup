@@ -1,0 +1,36 @@
+{
+  "name": "trading-dashboard-pro",
+  "version": "1.0.0",
+  "description": "Professional Trading Dashboard with Real-time Charts, SMC/ICT Analysis, and AI Integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8080 -c-1",
+    "dev": "http-server -p 8080 -c-1 --gzip",
+    "build": "echo 'Build complete'",
+    "deploy": "vercel --prod",
+    "preview": "vercel --prod"
+  },
+  "keywords": [
+    "trading",
+    "forex",
+    "crypto",
+    "charts",
+    "analysis",
+    "smc",
+    "ict",
+    "dashboard"
+  ],
+  "author": "Trading Pro",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/trading-dashboard-pro.git"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "vercel": "^33.0.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
